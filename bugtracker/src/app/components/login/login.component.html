@@ -1,0 +1,33 @@
+<main class="form-signin text-center">
+  <form [formGroup]="loginForm" (ngSubmit)="onSignIn()">
+    <object class="login-icon" data="/assets/svg/bug-fill.svg" type="image/svg+xml" height="100"></object>
+    <h1 class="h3 fw-normal mb-5 mt-2">Bugtracker</h1>
+
+    <label for="inputLogin" class="visually-hidden" >Login</label>
+    <input type="login"
+    id="inputLogin"
+    class="form-control"
+    placeholder="Login"
+    spellcheck="false"
+    formControlName="login"
+    autocomplete="false"
+    >
+
+    <label for="inputPassword" class="visually-hidden">Password</label>
+    <input type="password"
+    id="inputPassword"
+    class="form-control"
+    [ngClass]="{'is-invalid': isLoginFailed()}"
+    placeholder="Password"
+    name="password"
+    aria-describedby="inputPassword"
+    formControlName="password">
+
+    <div class="checkbox mb-3">
+      <div class="text-danger" [ngClass]="{'invisible': !isLoginFailed()}">Senha ou login incorretos.</div>
+      <label><input #rememberMe type="checkbox" value="remember-me" (click)="clickRemember()" [checked]="isRemember()"> Remember me</label>
+    </div>
+    <button class="w-100 btn btn-lg btn-primary" type="submit" [disabled]="!loginForm.valid">Sign in</button>
+    <p class="mt-5 mb-3 text-muted">Made with ❤ by <a href="https://github.com/iivnn" target="_blank">iivnn</a></p>
+  </form>
+</main>

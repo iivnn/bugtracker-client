@@ -7,6 +7,9 @@ import {
   } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { GlobalDataService } from 'src/app/services/global-data.service';
+import { UserInfo } from 'src/app/classes/UserInfo';
 
 @Component({
   selector: 'app-login',
@@ -16,13 +19,17 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit, OnDestroy {
 
   @ViewChild('rememberMe') checkBoxRememberMe? : ElementRef;
-
-  login? : string | null;
+  login: string | null;
   private loginFailed = false;
+  loginForm: FormGroup;
 
-  constructor(private elementRef: ElementRef,
-              private http: HttpClient,
-              private router: Router){}
+  constructor(private elementRef: ElementRef, private http: HttpClient, private router: Router, private globalData: GlobalDataService ){
+    this.login = localStorage.getItem('login');
+    this.loginForm = new FormGroup({
+      'login': new FormControl(this.login, Validators.required),
+      'password': new FormControl('', Validators.required)
+    })
+  }
 
   ngOnDestroy(): void {
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = 'white';
@@ -30,18 +37,18 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = 'rgb(230, 230, 230)';
-    this.login = localStorage.getItem('login');
   }
 
   onSignIn(){
-    if(this.isRemember() && this.login != null && this.login != ''){
-      localStorage.setItem('login', this.login);
-    }else{
-      localStorage.removeItem('login');
-    }
-    this.http.post('/api/signin', {login: 'ivan', password: '1234'}, {}).toPromise()
+    this.http.post('/api/signin', this.loginForm.value).toPromise()
     .then(
       (result) => {
+        if(this.isRemember()){
+          localStorage.setItem('login', this.loginForm.value.login);
+        }else{
+          localStorage.removeItem('login');
+        }
+        this.globalData.userInfo = <UserInfo> result;
         this.router.navigate(['/']);
       })
     .catch(

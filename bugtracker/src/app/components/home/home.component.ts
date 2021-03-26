@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalDataService } from '../../services/global-data.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private globalData: GlobalDataService) { }
 
   ngOnInit(): void {
+  }
+
+  showUserData(){
+    console.log(this.globalData.userInfo)
   }
 
 }
