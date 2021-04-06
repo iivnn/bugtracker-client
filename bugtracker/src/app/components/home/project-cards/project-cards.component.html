@@ -1,0 +1,14 @@
+<div class="card mb-3" *ngIf="project" class="card mb-3" style="min-height: 200px;">
+  <div class="row g-0">
+    <div class="col-4">
+      <a href="#"><img [src]="project.photoURL" [alt]="project.name" [title]="project.name" class="img-thumbnail project-thumb"></a>
+    </div>
+    <div class="col-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ project.name | titlecase}}</h5>
+        <p class="card-text">{{ project.desc | slice:0:300 }}<span *ngIf="project.desc.length > 300"> ...</span></p>
+        <p class="card-text"><small class="text-muted">{{ project.createdAt | date }}</small></p>
+      </div>
+    </div>
+  </div>
+</div>

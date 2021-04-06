@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Project } from 'src/app/classes/Project';
+import { ProjectService } from 'src/app/services/project.service';
 import { GlobalDataService } from '../../services/global-data.service';
 
 @Component({
@@ -8,13 +10,15 @@ import { GlobalDataService } from '../../services/global-data.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private globalData: GlobalDataService) { }
+  projects?: Project[];
+
+  constructor(private globalData: GlobalDataService,
+              private projectService: ProjectService) { }
 
   ngOnInit(): void {
+    this.projectService.getProjects().subscribe(
+      (result) => {
+        this.projects = result;
+      })
   }
-
-  showUserData(){
-    console.log(this.globalData.userInfo)
-  }
-
 }
