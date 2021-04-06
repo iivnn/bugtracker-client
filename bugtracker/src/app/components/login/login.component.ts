@@ -5,10 +5,10 @@ import {
   OnInit,
   ViewChild
   } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { GlobalDataService } from 'src/app/services/global-data.service';
+import { UserService } from 'src/app/services/user.service';
 import { UserInfo } from 'src/app/classes/UserInfo';
 
 @Component({
@@ -23,12 +23,16 @@ export class LoginComponent implements OnInit, OnDestroy {
   private loginFailed = false;
   loginForm: FormGroup;
 
-  constructor(private elementRef: ElementRef, private http: HttpClient, private router: Router, private globalData: GlobalDataService ){
+  constructor(private elementRef: ElementRef,
+              private router: Router,
+              private userService: UserService){
+
     this.login = localStorage.getItem('login');
     this.loginForm = new FormGroup({
       'login': new FormControl(this.login, Validators.required),
       'password': new FormControl('', Validators.required)
     })
+
   }
 
   ngOnDestroy(): void {
@@ -40,7 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onSignIn(){
-    this.http.post('/api/signin', this.loginForm.value).toPromise()
+    this.userService.signIn(this.loginForm.value.login, this.loginForm.value.password).toPromise()
     .then(
       (result) => {
         if(this.isRemember()){
@@ -48,7 +52,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         }else{
           localStorage.removeItem('login');
         }
-        this.globalData.userInfo = <UserInfo> result;
         this.router.navigate(['/']);
       })
     .catch(

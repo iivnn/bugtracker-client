@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Project } from 'src/app/classes/Project';
 import { ProjectService } from 'src/app/services/project.service';
-import { GlobalDataService } from '../../services/global-data.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -12,13 +13,23 @@ export class HomeComponent implements OnInit {
 
   projects?: Project[];
 
-  constructor(private globalData: GlobalDataService,
-              private projectService: ProjectService) { }
+  constructor(private projectService: ProjectService,
+              private router: Router,
+              private userService: UserService) { }
 
   ngOnInit(): void {
+    this.userService.getUser().subscribe(
+      result => {
+        console.log(result);
+      }
+    );
     this.projectService.getProjects().subscribe(
       (result) => {
         this.projects = result;
       })
+  }
+
+  isHomePage(){
+    return this.router.url == '/';
   }
 }

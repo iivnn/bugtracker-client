@@ -1,5 +1,5 @@
 <app-navbar></app-navbar>
-<div class="container">
+<div class="container" *ngIf="isHomePage()">
   <div class="row">
     <div class="col">
       <div *ngIf="projects == null; else showProjects">
@@ -13,3 +13,4 @@
     </div>
   </div>
 </div>
+<router-outlet></router-outlet>

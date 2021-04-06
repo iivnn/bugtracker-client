@@ -16,8 +16,4 @@ export class ProjectCardsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getProjectURL(){
-    return 'url(' + this.project?.photoURL + ')';
-  }
-
 }
