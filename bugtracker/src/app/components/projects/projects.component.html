@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="float-end mt-5">
+        <app-pagination></app-pagination>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div *ngIf="projects == null; else showProjects">
+        <div class="d-flex justify-content-center">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+      <ng-template #showProjects>
+        <div *ngFor="let project of projects">
+          <app-project-cards [project]="project"></app-project-cards>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="float-end">
+        <app-pagination></app-pagination>
+      </div>
+    </div>
+  </div>
+</div>

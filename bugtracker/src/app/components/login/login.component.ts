@@ -9,7 +9,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
-import { UserInfo } from 'src/app/classes/UserInfo';
 
 @Component({
   selector: 'app-login',

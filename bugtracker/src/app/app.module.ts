@@ -8,8 +8,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
-import { ProjectCardsComponent } from './components/home/project-cards/project-cards.component';
-import { NavbarComponent } from './components/home/navbar/navbar.component';
+import { ProjectCardsComponent } from './components/projects/project-cards/project-cards.component';
+import { ProjectsComponent } from './components/projects/projects.component'
+import { NavbarComponent } from './components/common/navbar/navbar.component';
+import { PaginationComponent } from './components/common/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { NavbarComponent } from './components/home/navbar/navbar.component';
     HomeComponent,
     ProjectCardsComponent,
     NavbarComponent,
+    PaginationComponent,
+    ProjectsComponent
   ],
   imports: [
     BrowserModule,
